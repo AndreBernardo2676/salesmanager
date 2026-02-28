@@ -1,5 +1,6 @@
 package com.andre.salesmanager.model;
-
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
@@ -9,9 +10,11 @@ import jakarta.validation.constraints.Email;
 @Entity
 public class Cliente {
 
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Pedido> pedidos = new ArrayList<>();
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
     @NotBlank
     @Column(nullable = false)
@@ -23,7 +26,7 @@ public class Cliente {
     private String email;
 
     @NotBlank
-    @Collumn(nulable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     public Cliente() {
@@ -64,6 +67,20 @@ public class Cliente {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Cliente)) return false;
+		Cliente other = (Cliente) o;
+		return id != null && id.equals(other.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return 31;
+	}
+
 
 
 }
