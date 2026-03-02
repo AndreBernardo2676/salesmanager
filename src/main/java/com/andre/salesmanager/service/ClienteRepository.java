@@ -1,5 +1,5 @@
 package com.andre.salesmanager.service;
 
-public class ClienteRepositoru {
+public class ClienteRepository {
 
 }
